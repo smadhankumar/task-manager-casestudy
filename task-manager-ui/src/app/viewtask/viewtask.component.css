@@ -1,0 +1,22 @@
+.taskbadge {
+  font-size: small;
+  color: #000000;
+  padding: 2.7em 1.7em 4.7em 1.7em;
+  background-color: #D3D3D3;
+  line-height: 1em;
+  position: relative;
+  left: -1px;
+  top: -4px;
+  height: 1.8em;
+  min-width: 16px;
+  text-align: center;
+  margin-right: .8em;
+  border-radius: 4px 0 0 4px;
+}
+.table td{
+    border-top : 0px !important;
+}
+.label-font{
+    font-weight: bold !important;
+    margin-top: 6px !important;
+}

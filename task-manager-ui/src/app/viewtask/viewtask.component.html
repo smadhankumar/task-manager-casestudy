@@ -1,0 +1,106 @@
+<div class="">
+  <div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-1 margin-bottom-10">
+   </div>
+   <div class="col-xs-12 col-sm-12 col-md-4 margin-bottom-10">
+     <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-2 padding-right-neutralize margin-bottom-10">
+          <label class="label-font" for="task">Task:</label>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-10 padding-left-neutralize margin-bottom-10">
+          <input type="text" class="form-control" id="task" name="task" [(ngModel)]="searchModel.task" />
+        </div>
+     </div>
+  </div>
+   <div class="col-xs-12 col-sm-12 col-md-6 margin-bottom-10">
+       <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-3 margin-bottom-10">
+               <label class="label-font float-right" for="parentTask">Parent Task:</label>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-9 margin-bottom-10">
+              <input type="text" class="form-control" id="parentTask" name="parentTask" [(ngModel)]="searchModel.parentTask"/>
+            </div>
+       </div>
+  </div>
+  <div class="col-xs-12 col-sm-12 col-md-1 margin-bottom-10">
+  </div>
+  </div>
+   <div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-1 margin-bottom-10">
+   </div>
+   <div class="col-xs-12 col-sm-12 col-md-3 margin-bottom-10">
+       <div class="row">
+           <div class="col-xs-12 col-sm-12 col-md-5 margin-bottom-10 padding-right-neutralize">
+              <label class="label-font" for="priorityFrom">Priority From:</label>
+           </div>
+            <div class="col-xs-12 col-sm-12 col-md-7 margin-bottom-10 padding-left-neutralize">
+              <input type="text" class="form-control" id="priorityFrom" name="priorityFrom" [(ngModel)]="searchModel.priorityFrom"/>
+            </div>
+       </div>
+  </div>
+   <div class="col-xs-12 col-sm-12 col-md-3 margin-bottom-10">
+       <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-4 margin-bottom-10 padding-left-neutralize padding-right-neutralize">
+               <label class="label-font" for="priorityTo">Priority To:</label>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-8 margin-bottom-10 padding-left-neutralize">
+               <input type="text" class="form-control" id="priorityTo" name="priorityTo" [(ngModel)]="searchModel.priorityTo"/>
+            </div>
+       </div>
+  </div>
+  <div class="col-xs-12 col-sm-12 col-md-2 margin-bottom-10">
+     <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-5 margin-bottom-10 padding-left-neutralize padding-right-neutralize">
+               <label class="label-font" for="startDate">Start Date:</label>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-7 margin-bottom-10 padding-left-neutralize">
+               <input type="text" class="form-control" id="startDate" name="startDate" [(ngModel)]="searchModel.startDate"/>
+            </div>
+     </div>
+  </div>
+  <div class="col-xs-12 col-sm-12 col-md-2 margin-bottom-10">
+     <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-5 margin-bottom-10 padding-left-neutralize padding-right-neutralize">
+              <label class="label-font" for="endDate">End Date:</label>
+            </div>
+             <div class="col-xs-12 col-sm-12 col-md-7 margin-bottom-10 padding-left-neutralize">
+               <input type="text" class="form-control" id="endDate" name="endDate" [(ngModel)]="searchModel.endDate"/>
+             </div>
+     </div>
+  </div>
+  <div class="col-xs-12 col-sm-12 col-md-1 margin-bottom-10">
+  </div>
+  </div>
+  <div class="row margin-top-10">
+     <div class="col-xs-12 col-sm-12 col-md-1 margin-bottom-10">
+     </div>
+     <div class="col-xs-12 col-sm-12 col-md-11 margin-bottom-10">
+     <div class="table-responsive">
+			<table *ngIf='null != taskModelList && taskModelList.length > 0' class="table app-custom-table">
+			  <tbody *ngFor="let taskModel of taskModelList | taskFilter : searchModel">
+           <tr>
+                    <th>Task</th>
+                    <th>Parent</th>
+				          	<th>Priority</th>
+				            <th>Start</th>   
+                    <th>End</th>
+                    <th></th>               
+          </tr>
+					<tr>
+            <td><p class="taskbadge">{{taskModel.taskName}}</p></td>
+            <td><p *ngIf="null !== taskModel.parentTaskDetail" class="taskbadge">{{taskModel.parentTaskDetail.parentTaskName}}</p>
+            <p *ngIf="null == taskModel.parentTaskDetail" class="taskbadge">This Task Has No Parent</p></td>
+            <td>{{taskModel.priority}}</td>
+            <td>{{taskModel.startDate}}</td>
+            <td>{{taskModel.endDate}}</td>
+						<td>
+               <button type="submit" [disabled]="!taskModel.disabled" id="add-task" (click)= "editTask(taskModel)" class="btn btn-success">Edit</button>
+               <button type="button" [disabled]="!taskModel.disabled" id="reset-task" (click)="endTask(taskModel)" class="margin-left-5 btn btn-success">End Task</button>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+    </div>
+  </div>
+</div>
