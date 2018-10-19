@@ -108,3 +108,50 @@ div.error-message-cmn-cls{
 .margin-top-25{
     margin-top: 25px;
 }
+
+.margin-top-50{
+    margin-top: 50px;
+}
+
+table.app-custom-table{
+    border-top:1px solid #ddd;
+    border-bottom:1px solid #ddd;
+    border-left:none;
+    border-right:none;
+    margin-top:10px;
+    margin-bottom:10px;
+}
+table.app-custom-table thead tr th{
+    padding-top:20px;
+    padding-bottom:20px;
+    font-weight:600;
+    font-size: 18px;
+}
+table.app-custom-table tbody tr td{
+    padding-top:20px;
+    padding-bottom:20px;
+    font-weight:600;
+}
+
+.table {
+    width: 100%;
+    max-width: 100%;
+    margin-bottom: 20px
+}
+
+.table-responsive {
+    min-height: .01%;
+    max-height: 500px;
+}
+
+@media screen and (max-width: 800px) {
+    .table-responsive {
+        width: 100%;
+        margin-bottom: 15px;
+        overflow-y: hidden;
+        -ms-overflow-style: -ms-autohiding-scrollbar;
+    }
+    .table-responsive>.table {
+        margin-bottom: 0
+    }
+}

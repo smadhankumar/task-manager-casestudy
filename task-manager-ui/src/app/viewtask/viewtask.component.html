@@ -1,4 +1,4 @@
-<div class="">
+<div class="" [hidden]="technicalError">
   <div class="row">
     <div class="col-xs-12 col-sm-12 col-md-1 margin-bottom-10">
    </div>
@@ -54,7 +54,8 @@
                <label class="label-font" for="startDate">Start Date:</label>
             </div>
             <div class="col-xs-12 col-sm-12 col-md-7 margin-bottom-10 padding-left-neutralize">
-               <input type="text" class="form-control" id="startDate" name="startDate" [(ngModel)]="searchModel.startDate"/>
+               <input class="form-control" placeholder="mm/dd/yyyy"
+                      name="sdp" [(ngModel)]="startDatePsd" [readonly]="false" [autoClose]="true" ngbDatepicker #sd="ngbDatepicker" (ngModelChange)="onDateSelect($event,'startDate')" (click)="sd.toggle()" dateFormat="MM/dd/yyyy">
             </div>
      </div>
   </div>
@@ -64,7 +65,8 @@
               <label class="label-font" for="endDate">End Date:</label>
             </div>
              <div class="col-xs-12 col-sm-12 col-md-7 margin-bottom-10 padding-left-neutralize">
-               <input type="text" class="form-control" id="endDate" name="endDate" [(ngModel)]="searchModel.endDate"/>
+                    <input class="form-control" placeholder="mm/dd/yyyy"
+                      name="edp" [(ngModel)]="endDatePsd" ngbDatepicker [readonly]="false" [autoClose]="true" (ngModelChange)="onDateSelect($event,'endDate')" #ed="ngbDatepicker" (click)="ed.toggle()" dateFormat="MM/dd/yyyy">
              </div>
      </div>
   </div>
@@ -104,3 +106,26 @@
     </div>
   </div>
 </div>
+<div class="margin-top-10" [hidden]="!technicalError">
+   <div class="row margin-top-50">
+        <div class="col-xs-12 col-sm-12 col-md-1 margin-bottom-10 padding-right-neutralize">
+        </div>
+         <div class="col-xs-12 col-sm-12 col-md-5 margin-top-10 margin-bottom-10 ant-anthem-alert ant-negative">
+              <div class="media">
+                <div class="media-left media-middle">
+                  <span class="fa fa-exclamation"></span>
+                </div>
+                <div class="media-body media-middle ">
+                  <p>
+                    <span *ngIf="updateError">Unable to end task. Please try again later</span>
+                    <span *ngIf="!updateError">We've encountered a technical error. Please try again later.</span>
+                  </p>
+                </div>
+              </div>
+        </div>
+         <div class="col-xs-12 col-sm-12 col-md-6 margin-bottom-10">
+        </div>
+  </div>
+</div>
+
+<task-screenfreeze class="text-align-center" [hidden]="!screenLoader"></task-screenfreeze>

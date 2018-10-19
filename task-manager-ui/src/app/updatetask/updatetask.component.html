@@ -1,0 +1,148 @@
+<div class="" [hidden]="technicalError">
+  <div class="row">
+   <div class="col-xs-12 col-sm-12 col-md-1 margin-bottom-10">
+   </div>
+   <div class="col-xs-12 col-sm-12 col-md-2 margin-bottom-10" [class.hasError]="(task.invalid && (task.dirty || task.touched)) || taskRequired || taskPresent">
+      <label class="label-font" for="task">Task:</label>
+  </div>
+   <div class="col-xs-12 col-sm-12 col-md-3 margin-bottom-10" [class.hasError]="(task.invalid && (task.dirty || task.touched)) || taskRequired || taskPresent">
+      <input type="text" class="form-control" id="task" #task="ngModel"
+      required name="task" [(ngModel)]="taskModel.taskName"/>
+      <div role="alert" aria-live="assertive" id="taskErrorDiv" *ngIf="(task.invalid && (task.dirty || task.touched)) || taskRequired">
+                <div class="error-message-cmn-cls" *ngIf="(null != task.errors && task.errors.required) || taskRequired">
+                  <span class="required-field-error"> </span>
+                  <span class="error-msg">Required field.</span>
+                </div>
+      </div>
+       <div role="alert" aria-live="assertive" id="taskErrorDiv" *ngIf="taskPresent">
+                <div class="error-message-cmn-cls" *ngIf="taskPresent">
+                  <span class="required-field-error"> </span>
+                  <span class="error-msg">Task with same name exists. Please try again with diffrent name.</span>
+                </div>
+      </div>
+  </div>
+  <div class="col-xs-12 col-sm-12 col-md-6 margin-bottom-10">
+  </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-1 margin-bottom-10">
+   </div>
+  <div class="col-xs-12 col-sm-12 col-md-2 margin-bottom-10">
+      <label class="label-font margin-top-25" for="priority">Priority:</label>
+  </div>
+   <div class="col-xs-12 col-sm-12 col-md-3 margin-bottom-10">
+      <span class="">0</span>
+      <span class="float-right">{{taskModel.priority != 0 ? taskModel.priority : 30}}</span>
+      <span> <input type="range" min="0" max="30" value="0" class="custom-range custom-range-slider" id="priority" name="priority" [(ngModel)]="taskModel.priority"></span>
+  </div>
+    <div class="col-xs-12 col-sm-12 col-md-6 margin-bottom-10">
+  </div>
+  </div>
+  <div class="row">
+   <div class="col-xs-12 col-sm-12 col-md-1 margin-bottom-10">
+   </div>
+   <div class="col-xs-12 col-sm-12 col-md-2 margin-bottom-10">
+      <label class="label-font" for="parentTask">Parent Task:</label>
+  </div>
+   <div class="col-xs-12 col-sm-12 col-md-3 margin-bottom-10">
+        <input list="tasklist" class="form-control" [(ngModel)]="parentTask"/>
+        <datalist id="tasklist">
+            <option *ngFor="let task of taskModelList" [value]="task.taskName"></option>
+        </datalist>
+     
+  </div>
+   <div class="col-xs-12 col-sm-12 col-md-6 margin-bottom-10">
+  </div>
+  </div>
+  <div class="row">
+  <div class="col-xs-12 col-sm-12 col-md-1 margin-bottom-10">
+  </div>
+  <div class="col-xs-12 col-sm-12 col-md-2 margin-bottom-10">
+      <label class="label-font" for="startDate">Start Date:</label>
+  </div>
+  <div class="col-xs-12 col-sm-12 col-md-3 margin-bottom-10">
+        <div class="input-group date" data-provide="datepicker">
+            <input type="text" class="form-control" id="startDate" #startDate="ngModel" name="startDate" [(ngModel)]="taskModel.startDate">
+            <div class="input-group-addon">
+                <span class="glyphicon glyphicon-th"></span>
+            </div>
+        </div>
+  </div>
+    <div class="col-xs-12 col-sm-12 col-md-6 margin-bottom-10">
+  </div>
+  </div>
+  <div class="row">
+     <div class="col-xs-12 col-sm-12 col-md-1 margin-bottom-10">
+    </div>
+   <div class="col-xs-12 col-sm-12 col-md-2 margin-bottom-10">
+      <label class="label-font" for="endDate">End Date:</label>
+  </div>
+   <div class="col-xs-12 col-sm-12 col-md-3 margin-bottom-10">
+       <div class="input-group date" data-provide="datepicker">
+            <input type="text" class="form-control" id="endDate" #endDate="ngModel" name="endDate" [(ngModel)]="taskModel.endDate">
+            <div class="input-group-addon">
+                <span class="glyphicon glyphicon-th"></span>
+            </div>
+        </div>
+  </div>
+    <div class="col-xs-12 col-sm-12 col-md-6 margin-bottom-10">
+  </div>
+  </div>
+  <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-1 margin-bottom-10 padding-right-neutralize">
+        </div>
+         <div class="col-xs-12 col-sm-12 col-md-5 margin-bottom-10 ant-anthem-alert ant-negative" *ngIf="dateErrorFlag || invalidParentTask">
+              <div class="media">
+                <div class="media-left media-middle">
+                  <span class="fa fa-exclamation"></span>
+                </div>
+                <div class="media-body media-middle ">
+                  <p>
+                    <span *ngIf="dateErrorFlag">End Date Should be greater than Start Date.</span>
+                    <span *ngIf="invalidParentTask">Parent Task Entered is not available in DB. Please select one of the available tasks as Parent.</span>
+                  </p>
+                </div>
+              </div>
+        </div>
+         <div class="col-xs-12 col-sm-12 col-md-6 margin-bottom-10">
+        </div>
+  </div>
+  <div class="row">
+     <div class="col-xs-12 col-sm-12 col-md-3 margin-bottom-10">
+     </div>
+    <div class="col-xs-12 col-sm-12 col-md-3 margin-bottom-10" *ngIf="this.editTaskName == ''">
+     <button type="submit" id="add-task" class="btn btn-success" (click)="goToViewTask()">Add Task</button>
+     <button type="button" id="reset-task" class="margin-left-5 btn btn-success" (click)="resetFields()">Reset</button>
+  </div>
+  <div class="col-xs-12 col-sm-12 col-md-3 margin-bottom-10" *ngIf="this.editTaskName != ''">
+     <button type="submit" id="add-task" class="btn btn-success" (click)="goToViewTask()">Update</button>
+     <button type="button" id="reset-task" class="margin-left-5 btn btn-success" (click)="cancelTask()">Cancel</button>
+  </div>
+    <div class="col-xs-12 col-sm-12 col-md-6 margin-bottom-10">
+  </div>
+  </div>
+</div>
+
+<div class="margin-top-10" [hidden]="!technicalError">
+   <div class="row margin-top-50">
+        <div class="col-xs-12 col-sm-12 col-md-1 margin-bottom-10 padding-right-neutralize">
+        </div>
+         <div class="col-xs-12 col-sm-12 col-md-5 margin-top-10 margin-bottom-10 ant-anthem-alert ant-negative">
+              <div class="media">
+                <div class="media-left media-middle">
+                  <span class="fa fa-exclamation"></span>
+                </div>
+                <div class="media-body media-middle ">
+                  <p>
+                    <span *ngIf="updateError">Unable to add/edit task. Please try again later</span>
+                    <span *ngIf="!updateError">We've encountered a technical error. Please try again later.</span>
+                  </p>
+                </div>
+              </div>
+        </div>
+         <div class="col-xs-12 col-sm-12 col-md-6 margin-bottom-10">
+        </div>
+  </div>
+</div>
+
+<task-screenfreeze class="text-align-center" [hidden]="!screenLoader"></task-screenfreeze>

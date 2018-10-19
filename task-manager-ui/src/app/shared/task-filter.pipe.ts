@@ -13,49 +13,28 @@ export class TaskFilterPipe implements PipeTransform {
         return items.filter(item => this.applyFilter(item, filter));  
   }
 
-   applyFilter(taskItem: any , filterItem: any): boolean {
-    var priorityFrom = 0;
-    var priorityTo = 0;
-    for (let field in filterItem) {
-      if (filterItem[field]) {
-        if (typeof filterItem[field] === 'string') {
-           if(field === 'priorityFrom'){
-             if(filterItem[field] === ""){
-                priorityFrom = 0;
-             }else{
-                priorityFrom = parseInt(filterItem[field]);
-             }
-          }else if(field === 'priorityTo'){
-             if(filterItem[field] === ""){
-                priorityTo = 0;
-             }else{
-                priorityTo = parseInt(filterItem[field]);
-             }
-          }else if(field === 'task'){
-             if (null !== filterItem[field] && undefined !== filterItem[field] && taskItem['taskName'].toLowerCase().indexOf(filterItem[field].toLowerCase()) === -1) {
-               return false;
-             }
-          }else if(field === 'parentTask'){
-            let parentTask = taskItem['parentTaskDetail'];
-             if (null !== filterItem[field] && undefined !== filterItem[field] && ((null != parentTask && parentTask.parentTaskName.toLowerCase().indexOf(filterItem[field].toLowerCase()) === -1)) || null == parentTask) {
-               return false;
-             }
-          }else if (null !== filterItem[field] && undefined !== filterItem[field] && taskItem[field].toLowerCase().indexOf(filterItem[field].toLowerCase()) === -1) {
-            return false;
-          }
-        }
-      }
-    }
-    var priority = 0;
-    if(taskItem['priority'] === ""){
-      priority = 0;
-    }else{
-      priority = parseInt(taskItem['priority']);
-    }
-    if (priorityTo !=0 && (priority < priorityFrom || priority > priorityTo)) {
-          return false;
+  applyFilter(taskItem: any , filterItem: any): boolean {
+    
+    if(null !== filterItem.task && undefined !== filterItem.task && taskItem['taskName'].toLowerCase().indexOf(filterItem.task.toLowerCase()) === -1){
+        return false;
+    }else if (null !== filterItem.parentTask && undefined !== filterItem.parentTask && ((null != taskItem['parentTaskDetail'] && taskItem['parentTaskDetail'].parentTaskName.toLowerCase().indexOf(filterItem.parentTask.toLowerCase()) === -1)) || null == taskItem['parentTaskDetail']) {
+        return false;
+    }else if((null !== filterItem.startDate && undefined !== filterItem.startDate && taskItem['startDate'].toLowerCase().indexOf(filterItem.startDate.toLowerCase()) === -1) ||
+    (null !== filterItem.endDate && undefined !== filterItem.endDate && taskItem['endDate'].toLowerCase().indexOf(filterItem.endDate.toLowerCase()) === -1)){
+        return false;
+    }else if(this.parsePriority(filterItem.priorityTo) != 0 && (this.parsePriority(taskItem['priority']) < this.parsePriority(filterItem.priorityFrom) || this.parsePriority(taskItem['priority']) > this.parsePriority(filterItem.priorityTo))){
+        return false;
     }
     return true;
   }
 
+  parsePriority(priority : string) : number {
+    let priorityNo = 0;
+    if(priority === ""){
+      priorityNo = 0;
+    }else{
+      priorityNo = parseInt(priority);
+    }
+    return priorityNo;
+  }
 }
