@@ -1,0 +1,41 @@
+CREATE TABLE USER (
+    user_id INT NOT NULL AUTO_INCREMENT,
+    first_name VARCHAR(100) NOT NULL,
+    last_name VARCHAR(100) NOT NULL,
+    employee_id VARCHAR(100) NOT NULL,
+    PRIMARY KEY (user_id),
+	UNIQUE (employee_id)
+);
+
+CREATE TABLE PROJECT (
+    project_id INT NOT NULL AUTO_INCREMENT,
+    project VARCHAR(100) NOT NULL,
+    start_date DATE NOT NULL,
+    end_date DATE NOT NULL,
+    priority INT NOT NULL,
+    employee_id VARCHAR(100) NOT NULL,    
+    PRIMARY KEY (project_id),
+	FOREIGN KEY (employee_id) REFERENCES user(employee_id)
+);
+
+CREATE TABLE PARENT_TASK (
+    parent_id INT NOT NULL AUTO_INCREMENT,
+    parent_task VARCHAR(100) NOT NULL,
+	project_id INT NOT NULL,
+    PRIMARY KEY (parent_id),
+	FOREIGN KEY (project_id) REFERENCES project(project_id)
+);
+
+CREATE TABLE TASK (
+    task_id INT NOT NULL AUTO_INCREMENT,
+    parent_id INT NULL,
+    project_id INT NOT NULL,
+    task VARCHAR(100) NOT NULL,
+    start_date DATE NOT NULL,
+    end_date DATE NOT NULL,
+    priority INT NOT NULL,
+    STATUS VARCHAR(100) NOT NULL,
+    PRIMARY KEY (task_id),
+    FOREIGN KEY (project_id) REFERENCES project(project_id),
+	FOREIGN KEY (parent_id) REFERENCES parent_task(parent_id)
+);
